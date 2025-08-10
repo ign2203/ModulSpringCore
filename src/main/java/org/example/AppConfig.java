@@ -11,6 +11,9 @@ import java.util.Scanner;
 @PropertySource("classpath:application.properties")
 @ComponentScan("org.example")
 public class AppConfig {
-
+    @Bean
+    public Scanner scanner() {
+        return new Scanner(System.in);
+    }
 
 }
