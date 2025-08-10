@@ -25,15 +25,13 @@ public enum OperationType {
     public String getDescription() {
         return description;
     }
-/*
-Я хочу разобраться с этим методом, вчера был вечер и я устрал сейчас с новыми силами готов разобраться!
- */
-    public static OperationType fromCode(int code) { // метод fromCode, принимает в качестве аргумента int code - т.е. цифру
-        for (OperationType type : OperationType.values()) { // проходится по всем объектам Enum  OperationType
-            if (type.getCode() == code) { // если геттер типа = равен значению которой введет пользователь,
-                return type; // то возращаем нужный объект enum
+
+    public static OperationType fromCode(int code) {
+        for (OperationType type : OperationType.values()) {
+            if (type.getCode() == code) {
+                return type;
             }
         }
-        throw new IllegalArgumentException("Неизвестная операция: " + code); // иначе неверный ввод, если пользователь попробует ввести букве или цифру 8
+        throw new IllegalArgumentException("Неизвестная операция: " + code);
     }
 }

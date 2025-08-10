@@ -31,7 +31,7 @@ public class UserCreateHandler implements Account.OperationHandler {
             log.info("Пользователь с логином '{}' создан успешно", login);
         } catch (IllegalArgumentException e) {
             System.out.println("Ошибка: " + e.getMessage());
-            log.error("Ошибка при создании пользователя", e); // логгирование обязательно? IDEA ругается на log
+            log.error("Ошибка при создании пользователя", e);
         }
     }
 

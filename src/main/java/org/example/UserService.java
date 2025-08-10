@@ -11,20 +11,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class UserService {
     private final AtomicInteger userIdSequence = new AtomicInteger(1);
-    private final Map<Long, User> usersById = new HashMap<>(); // библиотека для быстрого поиска и удаления по id пользователя
+    private final Map<Long, User> usersById = new HashMap<>();
 
+    public User createUser(String login) {
 
-    public User createUser(String login) {  // метод создания пользователя
-        // Проверяем, нет ли уже пользователя с таким логином
-        boolean loginExists = usersById.values().stream()// разберись с кодом
-                .anyMatch(user -> user.getLogin().equalsIgnoreCase(login)); // разберись с кодом
-        if (loginExists) { // разберись с кодом
-            throw new IllegalArgumentException("Пользователь с таким логином уже существует"); // разберись с кодом
+        boolean loginExists = usersById.values().stream()
+                .anyMatch(user -> user.getLogin().equalsIgnoreCase(login));
+        if (loginExists) {
+            throw new IllegalArgumentException("Пользователь с таким логином уже существует");
         }
 
 
         long id = userIdSequence.getAndIncrement();
-        User user = new User(id, login, new ArrayList<>()); // вот здесь интересно, я думаю accountList нам не нужен, это отдельный метод для создания счета, нужно подумать, здесь что то не так
+        User user = new User(id, login, new ArrayList<>());
         if (usersById.containsKey(id)) {
             throw new IllegalArgumentException("Пользователь с таким ID уже существует");
         }

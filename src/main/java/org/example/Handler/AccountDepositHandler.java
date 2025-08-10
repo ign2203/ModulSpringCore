@@ -24,7 +24,7 @@ public class AccountDepositHandler implements Account.OperationHandler {
     @Override
     public void handle() {
         try {
-            System.out.println("Для пополнения счета, введите Ваш ID счета:");// отображаем для пользователя
+            System.out.println("Для пополнения счета, введите Ваш ID счета:");
             String idStr = console.nextLine().trim();
             long id;
             try {
@@ -35,8 +35,8 @@ public class AccountDepositHandler implements Account.OperationHandler {
                 return;
             }
 
-            System.out.println("Введите сумму пополнения:"); // для пользователя
-            String amountStr = console.nextLine().trim(); // amountStr для ввода
+            System.out.println("Введите сумму пополнения:");
+            String amountStr = console.nextLine().trim();
             BigDecimal amount; // для операции
             try {
                 amount = new BigDecimal(amountStr);

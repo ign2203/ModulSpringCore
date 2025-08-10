@@ -3,17 +3,20 @@ package org.example;
 import java.util.List;
 
 public class User {
-   private final Long id;
-    private  final String login;
-    private List<Account> accountList; //Все счета, привязанные к пользователю
+    private final Long id;
+    private final String login;
+    private List<Account> accountList;
+
     public User(Long id, String login, List<Account> accountsList) {
         this.id = id;
         this.login = login;
         this.accountList = accountsList;
     }
+
     public Long getId() {
         return id;
     }
+
     public String getLogin() {
         return login;
     }
@@ -34,16 +37,6 @@ public class User {
                 ",\n  список счетов = " + accountList +
                 "\n}";
     }
-
-
-
-
-
-    /*
-
-
-
- */
 }
 
 

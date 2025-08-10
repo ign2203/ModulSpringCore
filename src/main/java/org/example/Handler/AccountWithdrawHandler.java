@@ -31,12 +31,12 @@ public class AccountWithdrawHandler implements Account.OperationHandler {
             try {
                 accountId = Long.parseLong(accountIdStr);
             } catch (NumberFormatException g) {
-            System.out.println("Ошибка: ID должен быть числом.");
-            log.error("Некорректный ввод ID счёта", g);
-            return;
-        }
+                System.out.println("Ошибка: ID должен быть числом.");
+                log.error("Некорректный ввод ID счёта", g);
+                return;
+            }
             System.out.println("Для снятия  средств, введите сумму снятия");
-            String amountStr = console.nextLine().trim(); // amountStr для ввода
+            String amountStr = console.nextLine().trim();
             BigDecimal amount; // для операции
             try {
                 amount = new BigDecimal(amountStr);

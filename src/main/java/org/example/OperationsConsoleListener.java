@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Component
 public class OperationsConsoleListener {
     private final Scanner console = new Scanner(System.in);
-    private final Map<OperationType, Account.OperationHandler> handlers; // вот здесь я так пониманию, что мы создаем Map, которая будет по нужному enum будет выдавать нужный класс реализованный от интерфейса OperationHandler
+    private final Map<OperationType, Account.OperationHandler> handlers;
     private static final Logger log = LoggerFactory.getLogger(OperationsConsoleListener.class);
 
     public OperationsConsoleListener(List<Account.OperationHandler> handlerList) {
@@ -27,70 +27,11 @@ public class OperationsConsoleListener {
     public void showMenu() {
         System.out.println("\nВыберите операцию:");
         for (OperationType type : OperationType.values()) {
-            System.out.printf("%d. %s%n", type.getCode(), type.getDescription()); //честно скопировал этот код, с сообщения которое ты писала ранее
-            // чем System.out.printf отличается от System.out.println() - незнаю
+            System.out.printf("%d. %s%n", type.getCode(), type.getDescription());
+
         }
     }
 
-//    private void handleOperation(OperationType operation) {
-//        switch (operation) {
-//            case USER_CREATE -> {
-//                System.out.println("Введите логин пользователя: ");
-//                String login = console.nextLine();
-//                userService.createUser(login);
-//            }
-//            case SHOW_ALL_USERS -> {
-//                System.out.println("Выводим список всех пользователей: ");
-//                userService.getAllUsers();
-//            }
-//            case ACCOUNT_CREATE -> {
-//                System.out.println("Введите Ваш ID (ID пользователя)");
-//
-//            }
-//            case ACCOUNT_CLOSE -> {
-//                System.out.println("Для удаления счета,введите Ваш ID (ID пользователя");
-//                Long userId = console.nextLong();
-//                skipLine();
-//                System.out.println("Для удаления счета,введите Ваш ID счета (ID счета)");
-//                Long id = console.nextLong();
-//                skipLine();
-//                accountService.closeAccount(userId, id);
-//            }
-//            case ACCOUNT_DEPOSIT -> {
-//                System.out.println("Для пополнения счета,введите Ваш ID счета (ID счета)");
-//                Long id = console.nextLong();
-//                skipLine();
-//                System.out.println("Для пополнения счета,введите сумму пополнения");
-//                BigDecimal amount = console.nextBigDecimal();
-//                skipLine();
-//                accountService.depositAccount(id, amount);
-//            }
-//            case ACCOUNT_TRANSFER -> {
-//                System.out.println("Для перевода средств, введите Ваш ID счета (ID счет отправителя)");
-//                Long fromId = console.nextLong();
-//                skipLine();
-//                System.out.println("Для перевода средств, введите ID счет получателя (ID счет получателя)");
-//                Long toId = console.nextLong();
-//                skipLine();
-//                System.out.println("Для перевода средств,введите сумму перевода");
-//                BigDecimal amount = console.nextBigDecimal();
-//                skipLine();
-//                accountService.transfer(fromId, toId, amount);
-//            }
-//            case ACCOUNT_WITHDRAW -> {
-//                System.out.println("Для снятия  средств, введите Ваш ID счета (ID счет пользователя)");
-//                Long accountId = console.nextLong();
-//                skipLine();
-//                System.out.println("Для снятия  средств, введите сумму снятия");
-//                BigDecimal amount = console.nextBigDecimal();
-//                skipLine();
-//                accountService.withdrawFromAccount(accountId, amount);
-//            }
-//            default -> {
-//                System.out.println("Операция пока не реализована.");
-//            }
-//        }
-//    }
 
     public void start() {
         boolean running = true;
@@ -98,20 +39,20 @@ public class OperationsConsoleListener {
 
         while (running) {
             System.out.print("Введите номер операции: ");
-            String inputStr = console.nextLine().trim(); // читаем всё, убираем пробелы
+            String inputStr = console.nextLine().trim();
 
             if (inputStr.isEmpty()) {
                 System.out.println("Вы ничего не ввели. Попробуйте снова.");
-                continue; // возвращаемся к меню
+                continue;
             }
 
             int input;
             try {
-                input = Integer.parseInt(inputStr); // конвертация в число
+                input = Integer.parseInt(inputStr);
             } catch (NumberFormatException e) {
                 System.out.println("Вы ввели не число, попробуйте снова.");
                 log.error("Ввод некорректных данных (не число)", e);
-                continue; // возвращаемся к меню
+                continue;
             }
 
             try {

@@ -15,5 +15,4 @@ public class AppConfig {
     public Scanner scanner() {
         return new Scanner(System.in);
     }
-
 }

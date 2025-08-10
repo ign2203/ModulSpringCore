@@ -4,12 +4,10 @@ import java.math.BigDecimal;
 
 
 public class Account {
-    private final Long id; // уникальный номер счета
-    private final Long userId;// Идентификатор пользователя, владельца счета. Внешнний ключ
-    private BigDecimal moneyAmount; // текущий баланс счета
+    private final Long id;
+    private final Long userId;
+    private BigDecimal moneyAmount;
 
-    // нужно создать конструктор
-    // в этом методе зависимость
 
     public Account(long id, long userId, BigDecimal moneyAmount) {
         this.id = id;
@@ -17,7 +15,7 @@ public class Account {
         this.moneyAmount = moneyAmount;
     }
 
-    public void withdraw(BigDecimal amount) { // снятие со счёта
+    public void withdraw(BigDecimal amount) {
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Сумма снятия должна быть положительной");
         }
@@ -27,7 +25,7 @@ public class Account {
         moneyAmount = moneyAmount.subtract(amount);
     }
 
-    public void deposit(BigDecimal amount) { // пополнение счёта
+    public void deposit(BigDecimal amount) {
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Сумма должна быть положительной");
         }
