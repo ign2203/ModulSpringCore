@@ -1,6 +1,5 @@
 package org.example.Handler;
 
-import org.example.Account;
 import org.example.AccountService;
 import org.example.OperationType;
 import org.slf4j.Logger;
@@ -11,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 
 @Component
-public class AccountTransferHandler implements Account.OperationHandler {
+public class AccountTransferHandler implements OperationHandler {
     private final AccountService accountService;
     private final Scanner console;
     private static final Logger log = LoggerFactory.getLogger(AccountTransferHandler.class);
@@ -55,7 +54,7 @@ public class AccountTransferHandler implements Account.OperationHandler {
                 return;
             }
             accountService.transfer(fromId, toId, amount);
-            System.out.println("Пользователь с ID-" + fromId + " перевел средства " + amount + " на счет отправителя ID-" + toId);
+            System.out.println("Пользователь с ID-" + fromId + " перевел средства " + amount + " на счет получателя ID-" + toId);
             log.info("Пользователь с ID {} перевел средства {} на счет отправителя {} ", fromId, amount, toId);
         } catch (IllegalArgumentException b) {
             System.out.println("Ошибка " + b.getMessage());

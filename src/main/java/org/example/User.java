@@ -1,20 +1,34 @@
 package org.example;
 
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "users")
 public class User {
-    private final Long id;
-    private final String login;
-    private List<Account> accountList;
+    @Id // здесь все понятно
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public User(Long id, String login, List<Account> accountsList) {
-        this.id = id;
+    @Column(name = "login")
+    private String login;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Account> accountList = new ArrayList<>();
+
+    public User(String login) {
         this.login = login;
-        this.accountList = accountsList;
+
     }
 
-    public Long getId() {
-        return id;
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public User() {
+
     }
 
     public String getLogin() {
@@ -25,17 +39,28 @@ public class User {
         return accountList;
     }
 
-    public void setAccountList(List<Account> accountList) {
+    public void setAccountList(
+            List<Account> accountList) {
         this.accountList = accountList;
+    }
+
+    public void addAccount(Account account) {
+        accountList.add(account);
+        account.setUser(this);
     }
 
     @Override
     public String toString() {
-        return "\nUser (Пользователь) {" +
-                "\n  id пользователя = " + id +
-                ",\n  логин = '" + login + '\'' +
-                ",\n  список счетов = " + accountList +
-                "\n}";
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", accounts=" + (accountList != null ?
+                accountList.stream().map(Account::getId).toList() : null) +
+                '}';
+    }
+
+    public Long getId() {
+        return id;
     }
 }
 

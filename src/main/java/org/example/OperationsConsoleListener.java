@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.Handler.OperationHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -12,26 +13,18 @@ import java.util.stream.Collectors;
 
 @Component
 public class OperationsConsoleListener {
-    private final Scanner console = new Scanner(System.in);
-    private final Map<OperationType, Account.OperationHandler> handlers;
+    private final Scanner console;
+    private final Map<OperationType, OperationHandler> handlers;
     private static final Logger log = LoggerFactory.getLogger(OperationsConsoleListener.class);
 
-    public OperationsConsoleListener(List<Account.OperationHandler> handlerList) {
+    public OperationsConsoleListener(List<OperationHandler> handlerList, Scanner scanner) {
         this.handlers = handlerList.stream()
                 .collect(Collectors.toMap(
-                        Account.OperationHandler::getOperationType,
+                        OperationHandler::getOperationType,
                         Function.identity()
                 ));
+        this.console = scanner;
     }
-
-    public void showMenu() {
-        System.out.println("\nВыберите операцию:");
-        for (OperationType type : OperationType.values()) {
-            System.out.printf("%d. %s%n", type.getCode(), type.getDescription());
-
-        }
-    }
-
 
     public void start() {
         boolean running = true;
@@ -64,15 +57,17 @@ public class OperationsConsoleListener {
                     continue;
                 }
 
-                Account.OperationHandler handler = handlers.get(operation);
+                OperationHandler handler = handlers.get(operation);
                 if (handler == null) {
                     log.warn("Операция {} пока не реализована", operation);
                     System.out.println("Операция пока не реализована");
                     continue;
                 }
-
                 handler.handle();
 
+                if (operation != OperationType.EXIT) {
+                    showMenu(); // показываем меню снова
+                }
             } catch (IllegalArgumentException e) {
                 System.out.println("Код операции не найден.");
                 log.error("Введён несуществующий код операции", e);
@@ -80,10 +75,15 @@ public class OperationsConsoleListener {
                 System.out.println("Произошла ошибка при выполнении операции.");
                 log.error("Необработанная ошибка", e);
             }
+        }
 
-            if (running) {
-                showMenu();
-            }
+    }
+
+    private void showMenu() {
+        System.out.println("\nВыберите операцию:");
+        for (OperationType type : OperationType.values()) {
+            System.out.printf("%d. %s%n", type.getCode(), type.getDescription());
+
         }
     }
 }

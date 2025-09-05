@@ -1,18 +1,33 @@
 package org.example;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 
-
+@Entity
+@Table(name = "accounts")
 public class Account {
-    private final Long id;
-    private final Long userId;
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "account_id")
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @Column(name = "money_amount")
     private BigDecimal moneyAmount;
 
 
-    public Account(long id, long userId, BigDecimal moneyAmount) {
-        this.id = id;
-        this.userId = userId;
+    public Account(BigDecimal moneyAmount) {
         this.moneyAmount = moneyAmount;
+    }
+
+    public Account() {
+
     }
 
     public void withdraw(BigDecimal amount) {
@@ -32,14 +47,6 @@ public class Account {
         moneyAmount = moneyAmount.add(amount);
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
     public BigDecimal getMoneyAmount() {
         return moneyAmount;
     }
@@ -52,13 +59,20 @@ public class Account {
     public String toString() {
         return "Account{" +
                 "id=" + id +
-                ", userId=" + userId +
+                ", userId=" + (user != null ? user.getId() : null) +
                 ", moneyAmount=" + moneyAmount +
                 '}';
     }
 
-    public static interface OperationHandler {
-        void handle();
-        OperationType getOperationType();
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

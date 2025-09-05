@@ -1,6 +1,5 @@
 package org.example.Handler;
 
-import org.example.Account;
 import org.example.AccountService;
 import org.example.OperationType;
 import org.slf4j.Logger;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.util.Scanner;
 
 @Component
-public class AccountCloseHandler implements Account.OperationHandler {
+public class AccountCloseHandler implements OperationHandler {
     private final AccountService accountService;
     private static final Logger log = LoggerFactory.getLogger(AccountCloseHandler.class);
     private final Scanner console;

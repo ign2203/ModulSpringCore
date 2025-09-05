@@ -1,6 +1,5 @@
 package org.example.Handler;
 
-import org.example.Account;
 import org.example.AccountService;
 import org.example.OperationType;
 import org.slf4j.Logger;
@@ -11,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 
 @Component
-public class AccountWithdrawHandler implements Account.OperationHandler {
+public class AccountWithdrawHandler implements OperationHandler {
     private final AccountService accountService;
     private final Scanner console;
     private static final Logger log = LoggerFactory.getLogger(AccountWithdrawHandler.class);

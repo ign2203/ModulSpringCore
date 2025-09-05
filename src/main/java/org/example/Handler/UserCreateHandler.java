@@ -1,6 +1,6 @@
 package org.example.Handler;
 
-import org.example.Account;
+
 import org.example.OperationType;
 import org.example.UserService;
 import org.slf4j.Logger;
@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 
 @Component
-public class UserCreateHandler implements Account.OperationHandler {
+public class UserCreateHandler implements OperationHandler {
     private static final Logger log = LoggerFactory.getLogger(UserCreateHandler.class);
     private final Scanner console;
     private final UserService userService;

@@ -1,6 +1,5 @@
 package org.example.Handler;
 
-import org.example.Account;
 import org.example.AccountService;
 import org.example.OperationType;
 import org.slf4j.Logger;
@@ -8,8 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
+
 @Component
-public class AccountCreateHandler implements Account.OperationHandler {
+public class AccountCreateHandler implements OperationHandler {
     private static final Logger log = LoggerFactory.getLogger(AccountCreateHandler.class);
     private final Scanner console;
     private final AccountService accountService;
@@ -27,7 +27,7 @@ public class AccountCreateHandler implements Account.OperationHandler {
             Long userId;
             try {
                 userId = Long.parseLong(userIdStr);
-            }catch (NumberFormatException g){
+            } catch (NumberFormatException g) {
                 System.out.println("Ошибка: ID должен быть числом.");
                 log.error("Некорректный ввод ID счёта", g);
                 return;
@@ -40,6 +40,7 @@ public class AccountCreateHandler implements Account.OperationHandler {
             log.error("Ошибка при создании счета", e);
         }
     }
+
     @Override
     public OperationType getOperationType() {
         return OperationType.ACCOUNT_CREATE;
